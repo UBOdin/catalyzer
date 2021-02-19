@@ -30,7 +30,7 @@ import java.util.Locale
 class CaseInsensitiveMap[T] private (val originalMap: Map[String, T]) extends Map[String, T]
   with Serializable {
 
-  //  Note: this class supports Scala 2.12. A parallel source tree has a 2.13 implementation.
+  //  Note: this class supports Scala 2.13. A parallel source tree has a 2.12 implementation.
 
   val keyLowerCasedMap = originalMap.map(kv => kv.copy(_1 = kv._1.toLowerCase(Locale.ROOT)))
 
@@ -39,17 +39,19 @@ class CaseInsensitiveMap[T] private (val originalMap: Map[String, T]) extends Ma
   override def contains(k: String): Boolean =
     keyLowerCasedMap.contains(k.toLowerCase(Locale.ROOT))
 
-  override def +[B1 >: T](kv: (String, B1)): CaseInsensitiveMap[B1] = {
-    new CaseInsensitiveMap(originalMap.filter(!_._1.equalsIgnoreCase(kv._1)) + kv)
+  override def updated[B1 >: T](key: String, value: B1): CaseInsensitiveMap[B1] = {
+    new CaseInsensitiveMap[B1](originalMap.filter(!_._1.equalsIgnoreCase(key)) + (key -> value))
   }
 
-  def ++(xs: TraversableOnce[(String, T)]): CaseInsensitiveMap[T] = {
-    xs.foldLeft(this)(_ + _)
+  override def +[B1 >: T](kv: (String, B1)): CaseInsensitiveMap[B1] = this.updated(kv._1, kv._2)
+
+  def ++(xs: IterableOnce[(String, T)]): CaseInsensitiveMap[T] = {
+    xs.iterator.foldLeft(this) { (m, kv) => m.updated(kv._1, kv._2) }
   }
 
   override def iterator: Iterator[(String, T)] = keyLowerCasedMap.iterator
 
-  override def -(key: String): Map[String, T] = {
+  override def removed(key: String): Map[String, T] = {
     new CaseInsensitiveMap(originalMap.filter(!_._1.equalsIgnoreCase(key)))
   }
 

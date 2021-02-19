@@ -1,7 +1,7 @@
-scalaVersion := "2.12.12"
+scalaVersion := "2.13.4"
 
 name := "catalyzer"
-version := "3.0-SNAPSHOT"
+version := "3.0"
 organization := "edu.buffalo.cse.odin"
 
 libraryDependencies ++= Seq(
