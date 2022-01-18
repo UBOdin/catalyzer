@@ -7,7 +7,7 @@ object SQLConf
     val datetimeJava8ApiEnabled = true
     val legacyStatisticalAggregate = false
     val maxToStringFields = 10
-    val maxPlanStringLength = 512
+    val maxPlanStringLength = 36*1025
     val tableRelationCacheSize = 1024
     val metadataCacheTTL = 1000
     val jsonFilterPushDown = true

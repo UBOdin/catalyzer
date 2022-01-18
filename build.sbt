@@ -1,11 +1,11 @@
 scalaVersion := "2.13.4"
 
 name := "catalyzer"
-version := "3.0"
+version := "3.0.1"
 organization := "edu.buffalo.cse.odin"
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"               % "scala-reflect"             % "2.12.13",
+  "org.scala-lang"               % "scala-reflect"             % "2.13.4",
   "org.scala-lang.modules"       %% "scala-parser-combinators" % "1.1.2",
   "com.fasterxml.jackson.core"   % "jackson-core"              % "2.12.1",
   "org.antlr"                    % "antlr4-runtime"            % "4.8",
